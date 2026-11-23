@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0B4A70">
+<title>María del Mar II · Dolores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;700&family=Nunito+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- PORTADA -->
+<header class="hero">
+  <img class="fondo" src="geria.jpeg" alt="Residencia María del Mar, sede Dolores">
+  <div class="hero-contenido">
+    <img class="logo" src="img/logo-blanco.png" alt="Maria del Mar">
+    <p class="etiqueta">Residencia para adultos mayores · Dolores</p>
+    <h1>María del Mar II</h1>
+    <p>Muy pronto abriremos nuestras puertas en la ciudad de Dolores brindando el mismo cuidado, calidez y atención de siempre.</p>
+    <div class="hero-botones">
+      <a class="btn btn-claro" href="https://wa.me/5492235644493?text=Hola!%20Quisiera%20recibir%20informaci%C3%B3n%20sobre%20la%20nueva%20sede%20en%20Dolores" target="_blank" rel="noopener">Consultar por lista de espera</a>
+      <a class="btn btn-vidrio" href="#lugar">Cómo llegar</a>
+    </div>
+  </div>
+  <a class="bajar" href="#intro" aria-label="Bajar">⌄</a>
+</header>
+
+<main>
+  <!-- PRESENTACIÓN -->
+  <section id="intro" class="intro">
+    <h2>Un lugar cálido donde cuidamos a quienes más amás</h2>
+    <p>Estamos preparando un nuevo espacio con la misma calidez, atención permanente y confort de siempre. Atención integral, pensada para el bienestar y la tranquilidad de cada residente.</p>
+    <p class="dato"><strong>15</strong> años de trayectoria</p>
+  </section>
+
+  <!-- FOTOS -->
+  <section id="fotos">
+    <h2>Conocé el lugar</h2>
+    <p class="ayuda">Tocá la foto para agrandarla.</p>
+    <!-- Para sumar más fotos, copiá una línea <button class="foto">…</button> y cambiá el nombre del archivo -->
+    <div class="carrusel" id="carrusel">
+      <button class="foto"><img src="geria.jpeg" alt="Residencia María del Mar, sede Dolores" loading="lazy"></button>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section id="video">
+    <h2>Mirá el video</h2>
+    <div class="video-caja" id="videoCaja">
+      <video id="recorrido" src="video.mp4" poster="geria.jpeg" playsinline preload="metadata"></video>
+      <button class="play" id="play" aria-label="Reproducir video">▶</button>
+    </div>
+  </section>
+
+  <!-- DIRECCIÓN -->
+  <section id="lugar" class="lugar">
+    <h2>Cómo encontrarnos</h2>
+    <p class="direccion">Ruta 2 Km 211 · Dolores, Buenos Aires</p>
+    <iframe class="mapa" title="Mapa" loading="lazy" src="https://maps.google.com/maps?q=Ruta%202%20km%20211,%20Dolores,%20Buenos%20Aires&t=&z=14&ie=UTF8&iwloc=&output=embed"></iframe>
+    <a class="btn btn-claro" href="https://www.google.com/maps/search/?api=1&query=Ruta+2+km+211,+Dolores,+Buenos+Aires" target="_blank" rel="noopener">Abrir en Google Maps</a>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <h2>Contactanos</h2>
+    <p class="ayuda">Será un placer brindarte toda la información sobre nuestros servicios.</p>
+    <div class="burbujas">
+      <a class="wsp" href="https://wa.me/5492235644493?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20la%20residencia%20y%20coordinar%20una%20visita.%20Muchas%20gracias" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+      <a href="tel:+542235644493">Llamar</a>
+      <a href="mailto:mdmresidencia@gmail.com">Email</a>
+      <a href="https://instagram.com/mariadelmaresidencia" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <img src="img/logo-azul.png" alt="Maria del Mar">
+  <p>Residencia para adultos mayores · Dolores</p>
+</footer>
+
+<!-- BARRA FIJA (aparece al bajar) -->
+<nav class="barra" id="barra" aria-label="Accesos rápidos">
+  <a href="tel:+542235644493">Llamar</a>
+  <a class="verde" href="https://wa.me/5492235644493?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20la%20residencia%20y%20coordinar%20una%20visita.%20Muchas%20gracias" target="_blank" rel="noopener">Programá tu visita</a>
+  <a href="#lugar">Ubicación</a>
+</nav>
+
+<!-- FOTO AMPLIADA -->
+<div class="visor" id="visor" role="dialog" aria-modal="true" aria-label="Foto ampliada">
+  <button class="v-cerrar" id="vCerrar" aria-label="Cerrar">✕</button>
+  <button class="v-flecha v-ant" id="vAnt" aria-label="Anterior">‹</button>
+  <img id="vImg" alt="">
+  <button class="v-flecha v-sig" id="vSig" aria-label="Siguiente">›</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
