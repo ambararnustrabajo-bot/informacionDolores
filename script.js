@@ -1,38 +1,89 @@
-// Barra fija: aparece al pasar la portada
-const barra = document.getElementById('barra');
-new IntersectionObserver(([e]) => barra.classList.toggle('visible', !e.isIntersecting),
-  { threshold: 0.15 }).observe(document.querySelector('.hero'));
+// Navegación por secciones
+const botonesSeccion = [...document.querySelectorAll('.explorar-item')];
+const paneles = [...document.querySelectorAll('.panel')];
 
-// Foto ampliada con flechas
-const fotos = [...document.querySelectorAll('#carrusel img')];
-const visor = document.getElementById('visor'), vImg = document.getElementById('vImg');
+function mostrarSeccion(id, mover = true) {
+  botonesSeccion.forEach(b => {
+    const activo = b.dataset.seccion === id;
+    b.classList.toggle('activo', activo);
+    b.setAttribute('aria-selected', activo ? 'true' : 'false');
+  });
+  paneles.forEach(p => p.classList.toggle('activo', p.id === id));
+
+  if (mover) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+botonesSeccion.forEach(b => b.addEventListener('click', () => mostrarSeccion(b.dataset.seccion)));
+document.getElementById('volverMenu').addEventListener('click', () => {
+  document.querySelector('.explorar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+// Galería de imágenes y videos
+const medios = [...document.querySelectorAll('#galeriaMedios .medio')];
+const visor = document.getElementById('visor');
+const vImg = document.getElementById('vImg');
+const vVideo = document.getElementById('vVideo');
 let actual = 0;
-const mostrar = i => { actual = (i + fotos.length) % fotos.length; vImg.src = fotos[actual].src; vImg.alt = fotos[actual].alt; };
-const abrir = i => { mostrar(i); visor.classList.add('abierto'); };
-const cerrar = () => visor.classList.remove('abierto');
-fotos.forEach((img, i) => {
-  img.addEventListener('error', () => img.parentElement.style.display = 'none');
-  img.parentElement.addEventListener('click', () => abrir(i));
+
+function mostrarMedio(i) {
+  actual = (i + medios.length) % medios.length;
+  const medio = medios[actual];
+  const esVideo = medio.dataset.tipo === 'video';
+
+  vImg.classList.toggle('visible', !esVideo);
+  vVideo.classList.toggle('visible', esVideo);
+
+  if (esVideo) {
+    vImg.removeAttribute('src');
+    vVideo.src = medio.dataset.src;
+  } else {
+    vVideo.pause();
+    vVideo.removeAttribute('src');
+    vImg.src = medio.dataset.src;
+    vImg.alt = medio.dataset.alt || 'Foto de la residencia';
+  }
+}
+
+function abrirMedio(i) {
+  if (!medios.length) return;
+  mostrarMedio(i);
+  visor.classList.add('abierto');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarVisor() {
+  visor.classList.remove('abierto');
+  vVideo.pause();
+  vVideo.removeAttribute('src');
+  document.body.style.overflow = '';
+}
+
+medios.forEach((medio, i) => {
+  medio.addEventListener('error', () => medio.style.display = 'none', true);
+  medio.addEventListener('click', () => abrirMedio(i));
 });
-document.getElementById('vCerrar').onclick = cerrar;
-document.getElementById('vAnt').onclick = () => mostrar(actual - 1);
-document.getElementById('vSig').onclick = () => mostrar(actual + 1);
-visor.addEventListener('click', e => { if (e.target === visor) cerrar(); });
-document.addEventListener('keydown', e => {
-  if (!visor.classList.contains('abierto')) return;
-  if (e.key === 'Escape') cerrar();
-  if (e.key === 'ArrowLeft') mostrar(actual - 1);
-  if (e.key === 'ArrowRight') mostrar(actual + 1);
-});
-if (fotos.length < 2) document.querySelectorAll('.v-flecha').forEach(b => b.style.display = 'none');
-// Deslizar con el dedo dentro del visor
+
+document.getElementById('vCerrar').onclick = cerrarVisor;
+document.getElementById('vAnt').onclick = () => mostrarMedio(actual - 1);
+document.getElementById('vSig').onclick = () => mostrarMedio(actual + 1);
+visor.addEventListener('click', e => { if (e.target === visor) cerrarVisor(); });
+
+if (medios.length < 2) {
+  document.querySelectorAll('.v-flecha').forEach(b => b.style.display = 'none');
+}
+
 let x0 = 0;
 visor.addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
 visor.addEventListener('touchend', e => {
   const d = e.changedTouches[0].clientX - x0;
-  if (Math.abs(d) > 50) mostrar(actual + (d < 0 ? 1 : -1));
+  if (Math.abs(d) > 50) mostrarMedio(actual + (d < 0 ? 1 : -1));
 });
 
-// Video con botón de play
-const caja = document.getElementById('videoCaja'), vid = document.getElementById('recorrido');
-document.getElementById('play').onclick = () => { vid.controls = true; vid.play(); caja.classList.add('activo'); };
+document.addEventListener('keydown', e => {
+  if (!visor.classList.contains('abierto')) return;
+  if (e.key === 'Escape') cerrarVisor();
+  if (e.key === 'ArrowLeft') mostrarMedio(actual - 1);
+  if (e.key === 'ArrowRight') mostrarMedio(actual + 1);
+});
