@@ -17,7 +17,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--cielo);outline-offs
 
 .hero{position:relative;min-height:70svh;display:flex;align-items:flex-end;background:var(--mar);color:#fff;border-radius:0 0 36px 36px;overflow:hidden}
 .hero .fondo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(7,51,80,.95) 5%,rgba(7,51,80,.25) 65%,rgba(7,51,80,.45))}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(7,51,80,.95) 5%,rgba(7,51,80,.25) 65%,rgba(7,51,80,.45));pointer-events:none}
 .hero-contenido{position:relative;z-index:1;padding:28px 24px 48px;max-width:680px;animation:entra .9s ease both}
 .logo{width:min(240px,65%);display:block;margin-bottom:18px}
 .hero h1{font-size:2.5rem}
@@ -38,7 +38,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--cielo);outline-offs
 .panel{display:none;animation:panel .35s ease both}
 .panel.activo{display:block}
 @keyframes panel{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.intro,.panel#presentacion{text-align:center}
+.panel#presentacion{text-align:center}
 #presentacion p{margin-top:10px}.dato{margin-top:20px!important;color:var(--mar)}
 .dato strong{font-family:var(--serif);font-size:2.6rem;margin-right:6px}
 .panel-cabecera{text-align:center}
@@ -69,4 +69,4 @@ footer{text-align:center;padding:10px 20px 40px}footer img{width:170px;max-width
 .v-cerrar,.v-flecha{position:absolute;border:0;background:rgba(255,255,255,.16);color:#fff;border-radius:50%;width:48px;height:48px;font-size:1.5rem;cursor:pointer}.v-cerrar{top:16px;right:16px}.v-flecha{top:50%;transform:translateY(-50%)}.v-ant{left:10px}.v-sig{right:10px}
 
 @media (min-width:500px){body{max-width:480px;margin:0 auto;background:#f4f8fa}.hero,section,footer{background-clip:padding-box}.barra{left:50%;right:auto;width:456px;transform:translateX(-50%)}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero .fondo{display:none}html{scroll-behavior:auto}}
