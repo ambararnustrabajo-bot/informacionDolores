@@ -1,56 +1,49 @@
-// Barra fija al pasar la portada
-const barra = document.getElementById('barra');
-new IntersectionObserver(([e]) => barra.classList.toggle('visible', !e.isIntersecting),
-  { threshold: 0.15 }).observe(document.querySelector('.hero'));
+const body = document.body;
+const secciones = [...document.querySelectorAll('.vista-seccion')];
+const vistaNombre = document.getElementById('vistaNombre');
 
-// Explorador tipo menú (sin scroll largo)
-const tabs = [...document.querySelectorAll('.menu-item')];
-const secciones = [...document.querySelectorAll('main section')];
-const btnVerTodo = document.getElementById('btnVerTodo');
-
-function activarSeccion(id, desplazar = true) {
-  document.body.classList.add('modo-menu');
-  btnVerTodo.classList.remove('activo');
-  tabs.forEach(t => {
-    const esActiva = t.dataset.seccion === id;
-    t.classList.toggle('activo', esActiva);
-    t.setAttribute('aria-selected', String(esActiva));
-  });
-  secciones.forEach(sec => {
-    sec.classList.toggle('vista-activa', sec.id === id);
-  });
-  if (desplazar) {
-    document.getElementById('menu-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+function irAPortada() {
+  body.classList.remove('vista-menu', 'vista-seccion-activa');
+  body.classList.add('vista-portada');
+  window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => activarSeccion(tab.dataset.seccion));
-});
+function irAMenu() {
+  body.classList.remove('vista-portada', 'vista-seccion-activa');
+  body.classList.add('vista-menu');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
 
-btnVerTodo.addEventListener('click', () => {
-  const estaTodo = !document.body.classList.contains('modo-menu');
-  if (estaTodo) {
-    activarSeccion('intro', false);
+function abrirSeccion(id) {
+  const objetivo = secciones.find(s => s.id === id);
+  if (!objetivo) return;
+  secciones.forEach(s => s.classList.toggle('activa', s.id === id));
+  if (vistaNombre && objetivo.dataset.titulo) {
+    vistaNombre.textContent = objetivo.dataset.titulo;
+  }
+  body.classList.remove('vista-portada', 'vista-menu');
+  body.classList.add('vista-seccion-activa');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+// Estado inicial: portada a pantalla completa sin scroll largo
+irAPortada();
+
+document.getElementById('btnAbrirMenu')?.addEventListener('click', irAMenu);
+document.getElementById('btnFlechaMenu')?.addEventListener('click', irAMenu);
+document.getElementById('btnVolverPortada')?.addEventListener('click', irAPortada);
+document.getElementById('btnVolverAlMenu')?.addEventListener('click', irAMenu);
+document.getElementById('barraBtnMenu')?.addEventListener('click', () => {
+  if (body.classList.contains('vista-menu')) {
+    irAPortada();
   } else {
-    document.body.classList.remove('modo-menu');
-    btnVerTodo.classList.add('activo');
-    tabs.forEach(t => {
-      t.classList.remove('activo');
-      t.setAttribute('aria-selected', 'false');
-    });
+    irAMenu();
   }
 });
+document.getElementById('barraBtnUbicacion')?.addEventListener('click', () => abrirSeccion('lugar'));
 
-document.querySelectorAll('[data-ir]').forEach(el => {
-  el.addEventListener('click', () => {
-    const destino = document.getElementById(el.dataset.ir);
-    if (destino) destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
-
-document.querySelectorAll('[data-seccion-rapida]').forEach(el => {
-  el.addEventListener('click', () => activarSeccion(el.dataset.seccionRapida));
+document.querySelectorAll('.menu-item').forEach(btn => {
+  btn.addEventListener('click', () => abrirSeccion(btn.dataset.seccion));
 });
 
 // Foto ampliada con flechas y contador de galería
