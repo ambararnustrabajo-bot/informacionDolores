@@ -46,11 +46,31 @@ document.querySelectorAll('.menu-item').forEach(btn => {
   btn.addEventListener('click', () => abrirSeccion(btn.dataset.seccion));
 });
 
-// Foto ampliada con flechas y contador de galería
+// Foto ampliada con flechas y contador de galería + precarga instantánea
 const fotos = [...document.querySelectorAll('#carrusel img')];
 const contadorFotos = document.getElementById('contadorFotos');
 const visor = document.getElementById('visor'), vImg = document.getElementById('vImg');
 let actual = 0;
+
+function prepararFotosRapido() {
+  fotos.forEach(img => {
+    if (img.hasAttribute('loading')) img.removeAttribute('loading');
+    img.decoding = 'sync';
+    if (typeof img.decode === 'function') {
+      img.decode().catch(() => {});
+    }
+  });
+}
+
+if (document.readyState === 'complete') {
+  prepararFotosRapido();
+} else {
+  window.addEventListener('load', prepararFotosRapido, { once: true });
+}
+
+document.querySelectorAll('[data-seccion="galeria"]').forEach(btn => {
+  btn.addEventListener('click', prepararFotosRapido);
+});
 
 function actualizarContador() {
   const visibles = fotos.filter(img => img.parentElement.style.display !== 'none').length;
