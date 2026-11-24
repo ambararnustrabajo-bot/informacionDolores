@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;700&family=Nunito+Sans:wght@400;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body class="modo-menu">
+<body class="app-menu">
 
 <!-- PORTADA CON VIDEO DE FONDO -->
 <header class="hero" id="portada">
@@ -23,20 +23,20 @@
     <p>Muy pronto abriremos nuestras puertas en la ciudad de Dolores brindando el mismo cuidado, calidez y atención de siempre.</p>
     <div class="hero-botones">
       <a class="btn btn-claro" href="https://wa.me/5492241602693?text=Hola!%20Quisiera%20recibir%20informaci%C3%B3n%20sobre%20la%20nueva%20sede%20en%20Dolores" target="_blank" rel="noopener">Consultar por lista de espera</a>
-      <button type="button" class="btn btn-vidrio" data-ir="menu-panel">Explorar menú</button>
+      <button type="button" class="btn btn-vidrio" id="btnAbrirMenu">Explorar menú</button>
     </div>
   </div>
-  <button type="button" class="bajar" data-ir="menu-panel" aria-label="Abrir menú de secciones">⌄</button>
+  <button type="button" class="bajar" id="btnFlechaMenu" aria-label="Abrir menú de secciones">⌄</button>
 </header>
 
-<!-- EXPLORADOR DE SECCIONES TIPO MENÚ -->
+<!-- PANTALLA DE MENÚ DE SECCIONES -->
 <nav class="menu-panel" id="menu-panel" aria-label="Explorador de secciones">
   <div class="menu-cabecera">
-    <span class="menu-titulo">Menú rápido</span>
-    <button type="button" class="menu-ver-todo" id="btnVerTodo">Ver todo</button>
+    <button type="button" class="menu-volver" id="btnVolverPortada">← Portada</button>
+    <span class="menu-titulo">Secciones</span>
   </div>
   <div class="menu-grid" role="tablist">
-    <button type="button" class="menu-item activo" role="tab" aria-selected="true" data-seccion="intro">
+    <button type="button" class="menu-item" role="tab" aria-selected="false" data-seccion="intro">
       <span class="menu-icono">✦</span>
       <strong>Conocé el lugar</strong>
       <small>15 años · Atención integral</small>
@@ -59,16 +59,22 @@
   </div>
 </nav>
 
-<main id="vistas">
+<!-- CONTENEDOR DE SECCIÓN ACTIVA (UNA POR VEZ, SIN SCROLL LARGO) -->
+<main id="vistas" class="vistas-contenedor">
+  <div class="vista-barra">
+    <button type="button" class="vista-regreso" id="btnVolverAlMenu">← Menú</button>
+    <span class="vista-nombre" id="vistaNombre">Conocé el lugar</span>
+  </div>
+
   <!-- PRESENTACIÓN -->
-  <section id="intro" class="intro vista-activa">
+  <section id="intro" class="intro vista-seccion" data-titulo="Conocé el lugar">
     <h2>Un lugar cálido donde cuidamos a quienes más amás</h2>
     <p>Estamos preparando un nuevo espacio con la misma calidez, atención permanente y confort de siempre. Atención integral, pensada para el bienestar y la tranquilidad de cada residente.</p>
     <p class="dato"><strong>15</strong> años de trayectoria</p>
   </section>
 
   <!-- GALERÍA DE FOTOS Y VIDEO -->
-  <section id="galeria" class="galeria">
+  <section id="galeria" class="galeria vista-seccion" data-titulo="Galería">
     <div class="galeria-top">
       <h2>Galería</h2>
       <span class="galeria-contador" id="contadorFotos">1 foto</span>
@@ -93,7 +99,7 @@
   </section>
 
   <!-- DIRECCIÓN -->
-  <section id="lugar" class="lugar">
+  <section id="lugar" class="lugar vista-seccion" data-titulo="Ubicación">
     <h2>Cómo encontrarnos</h2>
     <p class="direccion">Ruta 2 Km 211 · Dolores, Buenos Aires</p>
     <iframe class="mapa" title="Mapa" loading="lazy" src="https://maps.google.com/maps?q=Ruta%202%20km%20211,%20Dolores,%20Buenos%20Aires&t=&z=14&ie=UTF8&iwloc=&output=embed"></iframe>
@@ -101,7 +107,7 @@
   </section>
 
   <!-- CONTACTO -->
-  <section id="contacto">
+  <section id="contacto" class="vista-seccion" data-titulo="Contacto">
     <h2>Contactanos</h2>
     <p class="ayuda">Será un placer brindarte toda la información sobre nuestros servicios.</p>
     <div class="burbujas">
@@ -111,18 +117,18 @@
       <a href="https://instagram.com/mariadelmar_residencias" target="_blank" rel="noopener">Instagram</a>
     </div>
   </section>
+
+  <footer>
+    <img src="logo-azul.png" alt="Maria del Mar">
+    <p>Residencia para adultos mayores · Dolores</p>
+  </footer>
 </main>
 
-<footer>
-  <img src="logo-azul.png" alt="Maria del Mar">
-  <p>Residencia para adultos mayores · Dolores</p>
-</footer>
-
-<!-- BARRA FIJA (aparece al pasar la portada) -->
-<nav class="barra" id="barra" aria-label="Accesos rápidos">
-  <button type="button" class="barra-menu" data-ir="menu-panel">Menú</button>
+<!-- BARRA FIJA INFERIOR -->
+<nav class="barra visible" id="barra" aria-label="Accesos rápidos">
+  <button type="button" class="barra-menu" id="barraBtnMenu">Menú</button>
   <a class="verde" href="https://wa.me/5492241602693?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20la%20residencia%20y%20coordinar%20una%20visita.%20Muchas%20gracias" target="_blank" rel="noopener">Programá tu visita</a>
-  <button type="button" class="barra-menu" data-seccion-rapida="lugar">Ubicación</button>
+  <button type="button" class="barra-menu" id="barraBtnUbicacion">Ubicación</button>
 </nav>
 
 <!-- FOTO AMPLIADA -->
