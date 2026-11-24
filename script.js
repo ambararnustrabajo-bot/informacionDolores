@@ -42,6 +42,32 @@ document.getElementById('barraBtnMenu')?.addEventListener('click', () => {
 });
 document.getElementById('barraBtnUbicacion')?.addEventListener('click', () => abrirSeccion('lugar'));
 
+// Acceso directo al formulario para sumarse al equipo
+const barra = document.getElementById('barra');
+if (barra) {
+  const enlaceEquipo = document.createElement('a');
+  enlaceEquipo.className = 'barra-equipo';
+  enlaceEquipo.href = 'https://forms.gle/CRrouSU3ZcYS6DN88';
+  enlaceEquipo.target = '_blank';
+  enlaceEquipo.rel = 'noopener';
+  enlaceEquipo.textContent = 'Forma parte de nuestro equipo';
+  barra.append(enlaceEquipo);
+
+  const estiloEquipo = document.createElement('style');
+  estiloEquipo.textContent = `
+    .barra .barra-equipo {
+      flex: 1.6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-inline: 4px;
+      font-size: .72rem;
+      line-height: 1.1;
+    }
+  `;
+  document.head.append(estiloEquipo);
+}
+
 document.querySelectorAll('.menu-item').forEach(btn => {
   btn.addEventListener('click', () => abrirSeccion(btn.dataset.seccion));
 });
